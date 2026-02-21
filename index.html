@@ -1,80 +1,302 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <title>Leia — AI Research</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
-            margin: 80px;
-            background-color: #ffffff;
-            color: #111;
-            max-width: 900px;
-        }
-
-        h1 {
-            font-size: 40px;
-            margin-bottom: 10px;
-        }
-
-        h2 {
-            margin-top: 50px;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 5px;
-        }
-
-        p {
-            line-height: 1.6;
-            font-size: 16px;
-        }
-
-        a {
-            color: #0066cc;
-            text-decoration: none;
-        }
-
-        .section {
-            margin-top: 30px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Leia — AI Research</title>
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --card:#111827;
+      --card2:#0f172a;
+      --text:#e5e7eb;
+      --muted:#9ca3af;
+      --line:rgba(255,255,255,.08);
+      --accent:#7c3aed;
+      --accent2:#22c55e;
+      --accent3:#38bdf8;
+      --shadow: 0 20px 60px rgba(0,0,0,.45);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 800px at 20% -10%, rgba(124,58,237,.35), transparent 55%),
+        radial-gradient(900px 700px at 90% 10%, rgba(56,189,248,.18), transparent 55%),
+        radial-gradient(900px 700px at 70% 110%, rgba(34,197,94,.12), transparent 55%),
+        var(--bg);
+    }
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:1100px; margin:0 auto; padding:32px 20px 64px}
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:14px; margin-bottom:24px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      padding:10px 12px; border:1px solid var(--line);
+      border-radius:14px; background:rgba(17,24,39,.55);
+      backdrop-filter: blur(10px);
+    }
+    .dot{
+      width:10px; height:10px; border-radius:999px;
+      background:linear-gradient(135deg, var(--accent), var(--accent3));
+      box-shadow:0 0 0 6px rgba(124,58,237,.15);
+    }
+    .brand b{font-weight:700}
+    .nav{
+      display:flex; gap:10px; flex-wrap:wrap;
+    }
+    .pill{
+      padding:10px 12px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:rgba(17,24,39,.35);
+      transition: .15s ease;
+      color:var(--muted);
+      font-size:14px;
+    }
+    .pill:hover{transform: translateY(-1px); color:var(--text); border-color: rgba(124,58,237,.35)}
+    .hero{
+      display:grid;
+      grid-template-columns: 1.3fr .7fr;
+      gap:18px;
+      align-items:stretch;
+      margin-top:10px;
+    }
+    @media (max-width: 900px){
+      .hero{grid-template-columns:1fr}
+    }
+    .card{
+      background:linear-gradient(180deg, rgba(17,24,39,.82), rgba(15,23,42,.75));
+      border:1px solid var(--line);
+      border-radius:18px;
+      box-shadow: var(--shadow);
+      padding:22px;
+    }
+    .title{
+      font-size:44px; line-height:1.05; margin:0 0 10px;
+      letter-spacing:-.02em;
+    }
+    .subtitle{
+      margin:0 0 16px;
+      color:var(--muted);
+      font-size:16px;
+      line-height:1.6;
+      max-width: 62ch;
+    }
+    .badges{display:flex; flex-wrap:wrap; gap:10px; margin-top:14px}
+    .badge{
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      font-size:13px;
+      color:var(--muted);
+    }
+    .badge strong{color:var(--text); font-weight:600}
+    .cta{display:flex; gap:10px; flex-wrap:wrap; margin-top:18px}
+    .btn{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:11px 14px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      color:var(--text);
+      transition:.15s ease;
+      font-weight:600;
+      font-size:14px;
+    }
+    .btn:hover{transform: translateY(-1px); border-color: rgba(56,189,248,.35)}
+    .btn.primary{
+      background:linear-gradient(135deg, rgba(124,58,237,.95), rgba(56,189,248,.45));
+      border-color: rgba(124,58,237,.35);
+    }
+    .btn.primary:hover{border-color: rgba(124,58,237,.55)}
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:18px;
+      margin-top:18px;
+    }
+    @media (max-width: 900px){
+      .grid{grid-template-columns:1fr}
+    }
+    h2{
+      margin:0 0 10px;
+      font-size:16px;
+      letter-spacing:.02em;
+      text-transform:uppercase;
+      color:#cbd5e1;
+    }
+    .list{
+      margin:0; padding-left:18px; color:var(--muted);
+      line-height:1.8;
+      font-size:15px;
+    }
+    .project{
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:16px;
+      background:rgba(255,255,255,.02);
+    }
+    .project h3{margin:0 0 8px; font-size:18px}
+    .project p{margin:0 0 10px; color:var(--muted); line-height:1.6}
+    .meta{display:flex; flex-wrap:wrap; gap:10px}
+    .chip{
+      font-size:12px; color:var(--muted);
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:6px 9px;
+      background:rgba(255,255,255,.02);
+    }
+    .footer{
+      margin-top:22px;
+      color:var(--muted);
+      font-size:13px;
+      text-align:center;
+      opacity:.9;
+    }
+    .small{font-size:13px; color:var(--muted); line-height:1.6}
+    .highlight{
+      color:var(--text);
+      border-bottom:1px dashed rgba(124,58,237,.55);
+    }
+  </style>
 </head>
-
 <body>
+  <div class="wrap">
 
-<h1>Leia</h1>
-<p><strong>AI Research Portfolio</strong></p>
+    <div class="topbar">
+      <div class="brand">
+        <div class="dot"></div>
+        <div>
+          <b>LeiaAIResearch</b><div class="small">Portfolio acadêmico • PPgSI/USP (linha IS)</div>
+        </div>
+      </div>
 
-<div class="section">
-    <h2>Research Focus</h2>
-    <p>
-        My research interests lie in the evaluation of Large Language Models, 
-        multi-agent architectures, neuro-symbolic systems, and knowledge-enhanced machine learning.
-    </p>
-</div>
+      <div class="nav">
+        <a class="pill" href="#foco">Foco</a>
+        <a class="pill" href="#projeto">Projeto Âncora</a>
+        <a class="pill" href="#interesses">Interesses</a>
+        <a class="pill" href="#contato">Contato</a>
+      </div>
+    </div>
 
-<div class="section">
-    <h2>Ongoing Project</h2>
-    <p>
-        <strong>Neuro-Symbolic Multi-Agent LLM Evaluation Framework</strong><br>
-        Experimental framework designed to evaluate LLM robustness using multi-agent orchestration,
-        symbolic constraints, and structured knowledge verification.
-    </p>
-</div>
+    <div class="hero">
+      <div class="card">
+        <h1 class="title">Leia</h1>
+        <p class="subtitle">
+          Pesquisa aplicada em IA com foco em <span class="highlight">avaliação de LLMs</span>, 
+          <span class="highlight">arquiteturas multiagentes</span> e 
+          <span class="highlight">sistemas neuro-simbólicos</span> para aumentar factualidade, robustez e confiabilidade.
+        </p>
 
-<div class="section">
-    <h2>Research Interests</h2>
-    <ul>
-        <li>LLM Evaluation & Factuality</li>
-        <li>Argument Mining</li>
-        <li>Knowledge Graph Integration</li>
-        <li>Probabilistic & Logical Reasoning</li>
-    </ul>
-</div>
+        <div class="badges">
+          <div class="badge"><strong>Área:</strong> Inteligência de Sistemas (IS)</div>
+          <div class="badge"><strong>Temas:</strong> LLM Eval • Multi-Agent • Neuro-Symbolic</div>
+          <div class="badge"><strong>Objetivo:</strong> Mestrado → Doutorado</div>
+        </div>
 
-<div class="section">
-    <h2>Contact</h2>
-    <p>Email: seuemail@email.com</p>
-</div>
+        <div class="cta">
+          <a class="btn primary" href="#projeto">Ver projeto âncora</a>
+          <a class="btn" href="https://github.com/LeiaAIResearch" target="_blank" rel="noreferrer">GitHub</a>
+          <!-- Se você tiver Lattes/LinkedIn depois, descomenta e coloca o link -->
+          <!-- <a class="btn" href="https://lattes.cnpq.br/SEU_ID" target="_blank" rel="noreferrer">Lattes</a> -->
+          <!-- <a class="btn" href="https://www.linkedin.com/in/SEUUSER" target="_blank" rel="noreferrer">LinkedIn</a> -->
+        </div>
+      </div>
 
+      <div class="card">
+        <h2 id="foco">Research Focus</h2>
+        <ul class="list">
+          <li>Avaliação de factualidade e robustez de LLMs</li>
+          <li>Orquestração multiagente (RAG + verificação + crítica)</li>
+          <li>Restrições simbólicas e conhecimento estruturado</li>
+          <li>Argumentação computacional e qualidade de resposta</li>
+        </ul>
+
+        <div style="height:14px"></div>
+        <h2>Stack</h2>
+        <div class="meta">
+          <span class="chip">Python</span>
+          <span class="chip">PyTorch</span>
+          <span class="chip">RAG</span>
+          <span class="chip">Knowledge Graphs</span>
+          <span class="chip">Evaluation</span>
+        </div>
+
+        <div style="height:14px"></div>
+        <p class="small">
+          Este site é uma vitrine acadêmica (sem dados sensíveis). Repositórios públicos são “clean” e reproduzíveis.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card" id="projeto">
+        <h2>Projeto Âncora</h2>
+
+        <div class="project">
+          <h3>Neuro-Symbolic Multi-Agent LLM Evaluation Framework</h3>
+          <p>
+            Framework experimental para avaliar LLMs com uma arquitetura multiagente: geração → recuperação → verificação (conhecimento/regras) → crítica → métricas.  
+            Objetivo: reduzir alucinação e aumentar confiabilidade em tarefas orientadas a domínio.
+          </p>
+          <div class="meta">
+            <span class="chip">LLM Eval</span>
+            <span class="chip">Multi-Agent</span>
+            <span class="chip">Symbolic Constraints</span>
+            <span class="chip">Factuality</span>
+          </div>
+
+          <div style="height:12px"></div>
+          <a class="btn" href="#" title="Coloque aqui o link do repo do projeto âncora">Repo (em breve)</a>
+          <a class="btn" href="#" title="Coloque aqui um PDF do projeto quando tiver">Project Brief (PDF)</a>
+        </div>
+
+        <div style="height:12px"></div>
+        <p class="small">
+          Próximo passo: publicar o repositório “clean” com pipeline reprodutível + relatório de resultados iniciais.
+        </p>
+      </div>
+
+      <div class="card" id="interesses">
+        <h2>Research Interests</h2>
+        <ul class="list">
+          <li>LLM Evaluation & Factuality (qualitativo + quantitativo)</li>
+          <li>Argument Mining (bons vs ruins vs “convincente porém falso”)</li>
+          <li>Knowledge Graphs / Ontologias para verificação</li>
+          <li>Raciocínio probabilístico e regras lógicas (neuro-simbólico)</li>
+        </ul>
+
+        <div style="height:14px"></div>
+        <h2>Experimentos (em construção)</h2>
+        <ul class="list">
+          <li>Benchmark simples: factualidade em Q&A com fontes</li>
+          <li>Agente verificador: checagem de afirmações (claim checking)</li>
+          <li>Raciocínio com restrições: respostas sob regras</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" id="contato" style="margin-top:18px">
+      <h2>Contato</h2>
+      <p class="small">
+        Email: <b>coloque-seu-email-aqui</b> <br/>
+        GitHub: <a class="highlight" href="https://github.com/LeiaAIResearch" target="_blank" rel="noreferrer">github.com/LeiaAIResearch</a>
+      </p>
+    </div>
+
+    <div class="footer">
+      © <span id="year"></span> LeiaAIResearch • Built with GitHub Pages
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
